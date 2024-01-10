@@ -4,7 +4,6 @@ import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 import org.example.analysis.Analysis;
 import org.example.capture.ManageImage;
-
 import java.util.Scanner;
 
 public class Main {
@@ -26,8 +25,6 @@ public class Main {
                 manageImage.deleteImage(i);
             }
             i++;
-
-
         }
     }
 }

@@ -3,9 +3,11 @@ package org.example.analysis;
 import org.bytedeco.opencv.opencv_core.CvScalar;
 import org.bytedeco.opencv.opencv_core.IplImage;
 import org.openimaj.image.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
+
 import static org.bytedeco.opencv.global.opencv_core.cvAvg;
 
 public class Analysis {
@@ -14,7 +16,7 @@ public class Analysis {
 
         CvScalar averageColor = cvAvg(image, null);
         double averageBrightness = (averageColor.val(0) + averageColor.val(1) + averageColor.val(2)) / 3.0;
-        System.out.println("Brightness "+averageBrightness);
+        System.out.println("Brightness " + averageBrightness);
         if (averageBrightness > maxAverageBrightness) {
             System.out.println("COVER YOUR DEVICE!");
             return false;
@@ -23,12 +25,13 @@ public class Analysis {
     }
 
     public boolean detectWhitePix(int i) {
-        double noise = 0.35;
+        final double noise = 0.35;
+
         try {
-            MBFImage image = ImageUtilities.readMBF(new File("src/main/shots" + File.separator + (i) + "shot.jpg"));
+            MBFImage image = ImageUtilities.readMBF(new File("src/main/shots" + File.separator + (i) + "_shot.jpg"));
             System.out.println(image.colourSpace);
             MBFImage center;
-            double bandValue = 0;
+            double bandValue;
             for (int y = 0; y < image.getHeight(); y++) {
                 for (int x = 0; x < image.getWidth(); x++) {
                     bandValue = image.getBand(0).pixels[y][x] + image.getBand(1).pixels[y][x] + image.getBand(2).pixels[y][x];
@@ -45,7 +48,6 @@ public class Analysis {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-
         }
         return false;
     }
