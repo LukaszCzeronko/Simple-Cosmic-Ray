@@ -11,8 +11,10 @@ import java.util.Scanner;
 
 public class Main {
     static final String SAVE_LOCATION = "src/main/detections";
-    static final int CAMERA_HEIGHT = 720;
     static final int CAMERA_WIDTH = 1280;
+    static final int CAMERA_HEIGHT = 720;
+    static final double MAX_AVERAGE_BRIGHTNESS = 1.9;
+    static final double BACKGROUND_NOISE = 0.2;
 
     public static void main(String[] args) throws InterruptedException, IOException {
         int i = 0;
@@ -29,7 +31,7 @@ public class Main {
         grabber.start();
 
         while (true) {
-            manageImage.getImage(i, grabber, SAVE_LOCATION);
+            manageImage.getImage(i, grabber, SAVE_LOCATION, MAX_AVERAGE_BRIGHTNESS, BACKGROUND_NOISE);
             i++;
         }
     }

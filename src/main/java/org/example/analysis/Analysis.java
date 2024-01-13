@@ -17,18 +17,18 @@ public class Analysis {
     static final double MAX_AVERAGE_BRIGHTNESS = 1.9;
     static final double BACKGROUND_NOISE = 0.2;
 
-    public static boolean brightnessOfImage(IplImage image) {
+    public static boolean brightnessOfImage(IplImage image, double maxBrightness) {
         CvScalar averageColor = cvAvg(image, null);
         double averageBrightness = (averageColor.val(0) + averageColor.val(1) + averageColor.val(2)) / 3.0;
         System.out.println("Brightness: " + averageBrightness);
-        if (averageBrightness > MAX_AVERAGE_BRIGHTNESS) {
+        if (averageBrightness > maxBrightness) {
             System.out.println("COVER YOUR CAMERA DEVICE!");
             return false;
         }
         return true;
     }
 
-    public boolean detectWhitePix(int i, String saveLocation, IplImage photo) {
+    public boolean detectWhitePix(int i, String saveLocation, IplImage photo, double bgNoise) {
         try {
             final BufferedImage bufferedImage = ManageImage.IplImageToBufferedImage(photo);
             MBFImage image = ImageUtilities.createMBFImage(bufferedImage, false);
@@ -38,7 +38,7 @@ public class Analysis {
                 for (int x = 0; x < image.getWidth(); x++) {
                     bandValue = image.getBand(0).pixels[y][x] + image.getBand(1).pixels[y][x] + image.getBand(2).pixels[y][x];
                     //   int grayscalePixel = (0.21 * pRed) + (0.71 * pGreen) + (0.07 * pBlue)
-                    if (bandValue > BACKGROUND_NOISE) {
+                    if (bandValue > bgNoise) {
                         LocalTime currentTime = LocalTime.now();
                         System.out.println("Spotted flash in pixel");
                         System.out.println("x: " + x + "y: " + y);
